@@ -17,6 +17,7 @@ GAMES = ROOT / "games"
 SITE = ROOT / "site"
 
 TITLE = "Churchhouse Rule$"
+REPO_URL = "https://github.com/itogeo/churchhouse-rules"
 TYPES = ["Drinking", "Card", "Dice", "Board", "Word", "Party",
          "Icebreaker", "Outdoor", "Indoor", "Trail"]
 SECTIONS = ["The gist", "Players and time", "Materials and links", "Setup",
@@ -197,6 +198,8 @@ ol.seven li{display:grid;grid-template-columns:2rem 1fr;gap:8px;padding:12px 0;b
 .pair{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .trap{position:absolute;left:-9999px}
 .msg{border:1.5px solid var(--line);padding:10px 12px}
+footer{border-top:1.5px solid var(--line);padding-top:12px;font-size:.85rem;color:var(--faint)}
+footer a{color:var(--faint)}
 """
 
 JS = """
@@ -289,6 +292,7 @@ def page(title, body, script=""):
 <body>
 <div class="wrap">
 {body}
+<footer><a href="{REPO_URL}">All the game files are on GitHub</a></footer>
 </div>
 {f"<script>{script}</script>" if script else ""}
 </body>
