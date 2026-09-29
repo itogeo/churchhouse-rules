@@ -53,7 +53,7 @@ Werewolf app https://example.com
 Traditional
 ```
 
-- **type** is one of: Drinking, Card, Dice, Board, Word, Party, Icebreaker, Outdoor, Indoor, Trail
+- **type** is one of: Card, Word, Dice, Board, Outdoor, Trail, Indoor, Party, Icebreaker, Drinking
 - **players** is a number (`4`), a range (`3-6`) or a minimum (`5+`)
 - **minutes** is a plain number
 - A game with nothing under **5. How to play** shows as *incomplete*
