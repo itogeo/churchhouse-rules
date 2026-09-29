@@ -12,7 +12,7 @@ minutes:
 
 
 3. Materials and links
-Bananagrams set
+
 
 4. Setup
 
@@ -24,3 +24,4 @@ Bananagrams set
 A Bananagrams variant
 
 7. Rulemaster
+

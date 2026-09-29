@@ -9,10 +9,10 @@ minutes: 30
 
 
 2. Players and time
-2+
+
 
 3. Materials and links
-6 dice, paper
+
 
 4. Setup
 
@@ -24,4 +24,4 @@ minutes: 30
 
 
 7. Rulemaster
-Traditional
+

@@ -9,10 +9,10 @@ minutes: 20
 
 
 2. Players and time
-4 (two teams of 2)
+
 
 3. Materials and links
-Table, 20 cups, 2 ping-pong balls
+
 
 4. Setup
 
@@ -24,4 +24,4 @@ Table, 20 cups, 2 ping-pong balls
 
 
 7. Rulemaster
-Traditional
+

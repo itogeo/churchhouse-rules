@@ -9,10 +9,10 @@ minutes: 60
 
 
 2. Players and time
-4 (two partnerships)
+
 
 3. Materials and links
-One standard deck
+
 
 4. Setup
 
@@ -24,4 +24,4 @@ One standard deck
 
 
 7. Rulemaster
-Traditional
+

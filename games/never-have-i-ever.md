@@ -9,10 +9,10 @@ minutes: 20
 
 
 2. Players and time
-3+
+
 
 3. Materials and links
-Drinks, or ten fingers each
+
 
 4. Setup
 
@@ -24,4 +24,4 @@ Drinks, or ten fingers each
 
 
 7. Rulemaster
-Traditional
+

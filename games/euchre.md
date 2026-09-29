@@ -9,10 +9,10 @@ minutes: 45
 
 
 2. Players and time
-4 (two partnerships)
+
 
 3. Materials and links
-24-card deck (9 through Ace)
+
 
 4. Setup
 
@@ -24,4 +24,4 @@ minutes: 45
 
 
 7. Rulemaster
-Traditional
+

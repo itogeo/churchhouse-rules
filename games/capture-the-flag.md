@@ -9,10 +9,10 @@ minutes: 60
 
 
 2. Players and time
-10+
+
 
 3. Materials and links
-Two flags, a field split in half
+
 
 4. Setup
 
@@ -24,4 +24,4 @@ Two flags, a field split in half
 
 
 7. Rulemaster
-Traditional
+

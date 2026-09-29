@@ -12,7 +12,7 @@ minutes: 15
 
 
 3. Materials and links
-One standard deck, spoons (one fewer than players)
+
 
 4. Setup
 
@@ -24,4 +24,4 @@ One standard deck, spoons (one fewer than players)
 
 
 7. Rulemaster
-Traditional
+

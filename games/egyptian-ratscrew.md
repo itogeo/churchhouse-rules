@@ -12,7 +12,7 @@ minutes: 20
 
 
 3. Materials and links
-One standard deck
+
 
 4. Setup
 
@@ -24,4 +24,4 @@ One standard deck
 
 
 7. Rulemaster
-Traditional
+

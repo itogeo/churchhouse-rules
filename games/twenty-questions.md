@@ -9,10 +9,10 @@ minutes: 10
 
 
 2. Players and time
-2+
+
 
 3. Materials and links
-Nothing
+
 
 4. Setup
 
@@ -24,4 +24,4 @@ Nothing
 
 
 7. Rulemaster
-Traditional
+

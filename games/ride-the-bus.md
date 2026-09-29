@@ -9,10 +9,10 @@ minutes: 30
 
 
 2. Players and time
-3+
+
 
 3. Materials and links
-One standard deck, drinks
+
 
 4. Setup
 
@@ -24,4 +24,4 @@ One standard deck, drinks
 
 
 7. Rulemaster
-Traditional
+
