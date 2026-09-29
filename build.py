@@ -11,13 +11,10 @@ import re
 import shutil
 import sys
 from pathlib import Path
-from urllib.parse import quote
 
 ROOT = Path(__file__).resolve().parent
 GAMES = ROOT / "games"
 SITE = ROOT / "site"
-REPO = "itogeo/churchhouse-rules"
-BRANCH = "main"
 
 TITLE = "Churchhouse Rule$"
 TYPES = ["Drinking", "Card", "Dice", "Board", "Word", "Party",
@@ -152,7 +149,7 @@ html{-webkit-text-size-adjust:100%}
 body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.5 var(--type);padding:0 16px}
 .wrap{max-width:700px;margin:0 auto;padding-block:36px 72px;display:flex;flex-direction:column;gap:26px}
 a{color:var(--ink)}
-button,input{font:inherit;color:var(--ink)}
+button,input,select,textarea{font:inherit;color:var(--ink)}
 button{cursor:pointer}
 header{display:flex;flex-wrap:wrap;align-items:end;justify-content:space-between;gap:14px;border-bottom:3px double var(--line);padding-bottom:12px}
 h1{font:700 clamp(2.1rem,8vw,3rem)/1 var(--type);letter-spacing:.04em;text-transform:uppercase;margin:0}
@@ -193,6 +190,13 @@ ol.seven li{display:grid;grid-template-columns:2rem 1fr;gap:8px;padding:12px 0;b
 .val p{margin:0 0 .6em}.val p:last-child{margin:0}
 .blank{color:var(--faint);font-style:italic}
 .actions{display:flex;flex-wrap:wrap;gap:8px}
+.form{display:flex;flex-direction:column;gap:14px}
+.field{display:flex;flex-direction:column;gap:4px}
+.field input,.field select,.field textarea{background:transparent;border:1.5px solid var(--line);border-radius:0;padding:6px 8px;width:100%}
+.field textarea{min-height:5.5em;resize:vertical}
+.pair{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.trap{position:absolute;left:-9999px}
+.msg{border:1.5px solid var(--line);padding:10px 12px}
 """
 
 JS = """
@@ -235,6 +239,42 @@ JS = """
 """
 
 
+EDIT_JS = """
+(function(){
+  var f=document.getElementById('form'),msg=document.getElementById('msg'),save=document.getElementById('save');
+  var slug=new URLSearchParams(location.search).get('game')||'';
+  function show(t){msg.textContent=t;msg.hidden=false;msg.scrollIntoView({block:'nearest'})}
+  function players(g){if(!g.lo)return '';if(g.hi===null)return g.lo+'+';return g.lo===g.hi?''+g.lo:g.lo+'-'+g.hi}
+  if(slug){
+    document.getElementById('heading').textContent='Edit game';
+    fetch('games.json').then(function(r){return r.json()}).then(function(games){
+      var g=games.filter(function(x){return x.slug===slug})[0];
+      if(!g){show('Could not find that game.');save.disabled=true;return}
+      document.title='Edit '+g.name;
+      document.getElementById('back').href='games/'+slug+'.html';
+      f.name.value=g.name;f.type.value=g.type;f.players.value=players(g);f.minutes.value=g.minutes||'';
+      g.sections.forEach(function(s,i){f['s'+i].value=s});
+    }).catch(function(){show('Could not load the game. Reload to try again.')});
+  }
+  f.onsubmit=function(e){
+    e.preventDefault();save.disabled=true;msg.hidden=true;
+    var body={slug:slug,name:f.name.value,type:f.type.value,players:f.players.value,minutes:f.minutes.value,
+      website:f.website.value,sections:[0,1,2,3,4,5,6].map(function(i){return f['s'+i].value})};
+    fetch('/api/save',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify(body)})
+      .then(function(r){return r.json().catch(function(){return {error:'Could not save right now.'}})})
+      .then(function(res){
+        if(res.error){show(res.error);save.disabled=false;return}
+        f.hidden=true;
+        show('Saved. The site updates in a minute or two.');
+        var a=document.createElement('a');a.className='btn ghost';a.textContent='All games';a.href='./';
+        msg.appendChild(document.createElement('br'));msg.appendChild(a);
+      })
+      .catch(function(){show('Could not save right now. Check your connection and try again.');save.disabled=false});
+  };
+})();
+"""
+
+
 def page(title, body, script=""):
     return f"""<!doctype html>
 <html lang="en">
@@ -254,12 +294,6 @@ def page(title, body, script=""):
 </body>
 </html>
 """
-
-
-def new_game_url():
-    template = (GAMES / "_TEMPLATE.md").read_text(encoding="utf-8")
-    return (f"https://github.com/{REPO}/new/{BRANCH}/games?filename=new-game.md&value="
-            + quote(template))
 
 
 def render_index(games):
@@ -286,7 +320,7 @@ def render_index(games):
                       f'<ul class="list">{"".join(lis)}</ul></section>')
     body = f"""<header>
   <h1>{esc(TITLE)}</h1>
-  <a class="btn" href="{esc(new_game_url())}">Add a game</a>
+  <a class="btn" href="edit.html">Add a game</a>
 </header>
 <div class="tools" hidden>
   <div class="tline"><button type="button" class="btn ghost" id="qs">Search</button><input id="q" type="search" aria-label="Search" hidden><button type="button" class="btn ghost" id="qx" hidden>Close</button></div>
@@ -310,18 +344,51 @@ def render_game(g):
             text = "\n".join(x for x in [players_time(g), text] if x)
         val = rich(text) if text else '<p class="blank">Not written down yet</p>'
         lines.append(f'<li><span class="num">{i + 1}</span><div class="val"><span class="lbl">{label}</span>{val}</div></li>')
-    edit = f"https://github.com/{REPO}/edit/{BRANCH}/games/{g['slug']}.md"
     body = f"""<header>
   <h1><a href="../">{esc(TITLE)}</a></h1>
 </header>
 <article class="sheet">
   <div class="top">
     <div><div class="cat">{esc(g["type"])}</div><h2>{esc(g["name"])}</h2></div>
-    <div class="actions"><a class="btn ghost" href="../">All games</a><a class="btn" href="{esc(edit)}">Edit</a></div>
+    <div class="actions"><a class="btn ghost" href="../">All games</a><a class="btn" href="../edit.html?game={esc(g['slug'])}">Edit</a></div>
   </div>
   <ol class="seven">{"".join(lines)}</ol>
 </article>"""
     return page(f"{g['name']} | {TITLE}", body)
+
+
+def render_edit():
+    types = "".join(f'<option>{t}</option>' for t in TYPES)
+    hints = ["What makes this game different from every other game.",
+             "Anything like \"best with 4\" or \"teams of 2\".",
+             "What you need. Links on their own line.",
+             "How to deal, seat, or split into teams.",
+             "The actual rules.",
+             "House rules and other versions.",
+             "Who invented it, taught it, or settles arguments."]
+    fields = "".join(
+        f'<label class="field"><span class="lbl">{i + 1}. {label}</span>'
+        f'<textarea name="s{i}" placeholder="{esc(hints[i])}"></textarea></label>'
+        for i, label in enumerate(SECTIONS))
+    body = f"""<header>
+  <h1><a href="./">{esc(TITLE)}</a></h1>
+</header>
+<article class="sheet">
+  <div class="top"><h2 id="heading">Add a game</h2><a class="btn ghost" id="back" href="./">Cancel</a></div>
+  <div class="msg" id="msg" role="status" hidden></div>
+  <form class="form" id="form">
+    <label class="field"><span class="lbl">Name</span><input name="name" required maxlength="80" autocomplete="off"></label>
+    <label class="field"><span class="lbl">Type</span><select name="type" required><option value="">Pick one</option>{types}</select></label>
+    <div class="pair">
+      <label class="field"><span class="lbl">Players</span><input name="players" placeholder="4, 3-6 or 5+" autocomplete="off"></label>
+      <label class="field"><span class="lbl">Minutes</span><input name="minutes" inputmode="numeric" placeholder="30" autocomplete="off"></label>
+    </div>
+    {fields}
+    <label class="trap" aria-hidden="true">Leave this empty<input name="website" tabindex="-1" autocomplete="off"></label>
+    <div class="actions"><button class="btn" id="save" type="submit">Save</button></div>
+  </form>
+</article>"""
+    return page(f"Edit | {TITLE}", body, EDIT_JS)
 
 
 def main():
@@ -342,6 +409,7 @@ def main():
         shutil.rmtree(SITE)
     (SITE / "games").mkdir(parents=True)
     (SITE / "index.html").write_text(render_index(games), encoding="utf-8")
+    (SITE / "edit.html").write_text(render_edit(), encoding="utf-8")
     for g in games:
         (SITE / "games" / f"{g['slug']}.html").write_text(render_game(g), encoding="utf-8")
     (SITE / "games.json").write_text(json.dumps(games, indent=1), encoding="utf-8")

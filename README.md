@@ -12,20 +12,13 @@ Each game is one plain text file in [`games/`](games/), and each file has seven 
 6. Variations
 7. Rulemaster
 
-## Add a game
+## Add or fix a game
 
-You need a free GitHub account. Nothing to install.
+On the site, click **Add a game**, or open a game and click **Edit**. Fill in what you know and press **Save**. Only the name and type are required. The site updates itself in a minute or two.
 
-1. On the site, click **Add a game**. (Or open [`games/`](games/) here and choose **Add file > Create new file**.)
-2. GitHub opens a copy of the template. Name the file after the game, like `kings-cup.md`.
-3. Fill in what you know. Only `name` and `type` are required. Leave the rest blank if you're not sure.
-4. Click **Commit changes**, then **Propose changes**, then **Create pull request**.
+Saves go straight to the site, and every one is kept in this repo's history, so anything can be undone.
 
-Once it's approved, the site updates itself within a couple of minutes.
-
-## Fix or add to a game
-
-Open the game on the site and click **Edit**. That opens its file on GitHub. Make your changes and propose them the same way.
+You can also edit the files here on GitHub if you'd rather: open [`games/`](games/), change a file, and propose the change.
 
 ## The file format
 
@@ -79,4 +72,6 @@ Python 3 only, no packages. Open `site/index.html` in a browser to look at it.
 
 ## Hosting
 
-Cloudflare Pages (`churchhouse-rules`) builds the site from this repo on every merge to `main`: build command `python3 build.py`, output folder `site`. Each proposal also gets its own preview link, so you can see a new game before approving it.
+Cloudflare Pages (`churchhouse-rules`, served at churchhouserules.itogeospatial.com) builds the site from this repo on every change to `main`: build command `python3 build.py`, output folder `site`.
+
+Saving from the site goes through `functions/api/save.js`, which runs only when someone presses Save. It checks the game with the same rules as `build.py` (`lib/game.js`) and commits the file to `main` with a GitHub token stored on the Pages project as `GITHUB_TOKEN` (fine-grained, this repo only, Contents: read and write).
