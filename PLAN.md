@@ -11,3 +11,9 @@
 - GITHUB_TOKEN (fine-grained, this repo only, Contents RW, expires ~2027-09) set on Pages production 2026-09-29; add+edit tested live and the test game removed.
 - Add a house password (or Turnstile) before sharing widely.
 - Not supported from the site: deleting or renaming a game's file.
+
+## Notes (2026-09-29, end of session)
+- Type order on the page: Card, Word, Dice, Board, Outdoor, Trail, Indoor, Party, Icebreaker, Drinking (Drinking last on purpose). Order lives in TYPES in build.py and lib/game.js; keep them the same.
+- Footer on every page: GitHub mark + "Contribute on GitHub". itogeo is the only collaborator.
+- Workers usage: only Save counts (static views are free). ~12 function calls on launch day; account total ~1,900/day of 100k.
+- Site saves show as itogeo in history (no per-person name). Optional later: "Your name" field, notification on new saves.
