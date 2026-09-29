@@ -1,12 +1,12 @@
 ---
 name: Zz Test Delete Me
-type: Card
-players: 2-4
-minutes: 10
+type: Dice
+players: 3
+minutes: 
 ---
 
 1. The gist
-Test save from the site. Will be removed.
+Edited.
 
 2. Players and time
 
