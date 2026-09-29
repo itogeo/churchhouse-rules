@@ -224,7 +224,7 @@ JS = """
     document.querySelectorAll('[data-f]').forEach(function(b){b.querySelector('small').textContent=counts[b.dataset.f]||0;b.setAttribute('aria-pressed',b.dataset.f===type)});
     document.querySelectorAll('[data-t]').forEach(function(b){b.setAttribute('aria-pressed',b.dataset.t===time)});
     document.getElementById('pv').textContent=people||'any';
-    var n=document.getElementById('hiddenNote');n.hidden=!hidden;n.textContent=hidden+' incomplete game'+(hidden>1?'s':'')+' hidden';
+    var n=document.getElementById('hiddenNote');n.hidden=!hidden;n.textContent=hidden+' game'+(hidden>1?'s':'')+' hidden with no player count or time yet';
     document.getElementById('none').hidden=rows.some(function(r){return !r.parentNode.hidden});
   }
   document.getElementById('pm').onclick=function(){people=Math.max(0,people-1);apply()};
