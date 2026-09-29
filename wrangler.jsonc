@@ -1,0 +1,11 @@
+// Static site only: no Worker script, so every request is a free asset request.
+// Run `python3 build.py` first; it writes the site into site/.
+{
+  "name": "churchhouse-rules",
+  "compatibility_date": "2026-09-29",
+  "assets": {
+    "directory": "./site",
+    "html_handling": "auto-trailing-slash",
+    "not_found_handling": "404-page"
+  }
+}
