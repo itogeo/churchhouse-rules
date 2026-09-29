@@ -177,7 +177,6 @@ h1 a{text-decoration:none}
 .list{list-style:none;margin:0;padding:0}
 .row{display:block;padding:9px 2px;border-bottom:1px dotted var(--faint);text-decoration:none;font-weight:700;font-size:1.05rem}
 .row:hover{background:var(--hush)}
-.stub{font-size:.7rem;color:var(--faint);margin-left:8px;text-transform:uppercase;letter-spacing:.06em;font-weight:400}
 .empty{border:1.5px dashed var(--line);padding:24px;text-align:center}
 .sheet{border:1.5px solid var(--line);padding:22px 20px;display:flex;flex-direction:column;gap:14px}
 .top{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px;align-items:start}
@@ -318,8 +317,7 @@ def render_index(games):
             lis.append(
                 f'<li><a class="row" href="games/{g["slug"]}.html" data-type="{t}" '
                 f'data-lo="{g["lo"] or ""}" data-hi="{g["hi"] or ""}" data-min="{g["minutes"] or ""}" '
-                f'data-text="{esc(text)}">{esc(g["name"])}'
-                f'{"<span class=stub>incomplete</span>" if g["incomplete"] else ""}</a></li>')
+                f'data-text="{esc(text)}">{esc(g["name"])}</a></li>')
         groups.append(f'<section class="group"><h2>{t}<small>{len(items)}</small></h2>'
                       f'<ul class="list">{"".join(lis)}</ul></section>')
     body = f"""<header>
