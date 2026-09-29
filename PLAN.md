@@ -8,6 +8,6 @@
 
 ## Open
 - Custom domain churchhouserules.itogeospatial.com attached 2026-09-29 (Pages domain + proxied CNAME).
-- Ian: create the fine-grained GitHub token and add it as encrypted `GITHUB_TOKEN` on the Pages project, then retry the latest deploy.
+- GITHUB_TOKEN (fine-grained, this repo only, Contents RW, expires ~2027-09) set on Pages production 2026-09-29; add+edit tested live and the test game removed.
 - Add a house password (or Turnstile) before sharing widely.
 - Not supported from the site: deleting or renaming a game's file.
