@@ -1,6 +1,6 @@
 ---
 name: Flunkyball
-type: Drinking
+type: Outdoor
 players: 6-20
 minutes: 30
 ---
