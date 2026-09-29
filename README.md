@@ -79,4 +79,4 @@ Python 3 only, no packages. Open `site/index.html` in a browser to look at it.
 
 ## Hosting
 
-A Cloudflare Worker (`churchhouse-rules`, static files only) builds the site from this repo on every merge to `main`: build command `python3 build.py`, deploy command `npx wrangler deploy`. Settings are in `wrangler.jsonc`.
+Cloudflare Pages (`churchhouse-rules`) builds the site from this repo on every merge to `main`: build command `python3 build.py`, output folder `site`. Each proposal also gets its own preview link, so you can see a new game before approving it.
